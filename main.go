@@ -7,19 +7,23 @@ import (
 )
 
 func main() {
-	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Println("Enter your name: ")
+	startRepl()
+}
 
-	for scanner.Scan() {
+func startRepl() {
+	scanner := bufio.NewScanner(os.Stdin)
+
+	for {
+		fmt.Print(" >")
+		scanner.Scan()
 		inputText := scanner.Text()
+
+		fmt.Println("right back at you:", inputText)
+
 		if inputText == "exit" {
-			fmt.Println("Exiting...")
+			fmt.Println("sayonara")
 			break
 		}
-		fmt.Println("You entered:", inputText)
 	}
 
-	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "reading standard input:", err)
-	}
 }
