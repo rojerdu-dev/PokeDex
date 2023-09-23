@@ -19,7 +19,9 @@ func startRepl() {
 		scanner.Scan()
 		inputText := scanner.Text()
 
-		fmt.Println("right back at you:", inputText)
+		cleaned := cleanInput(inputText)
+
+		fmt.Println("right back at you:", cleaned)
 
 		if inputText == "exit" {
 			fmt.Println("sayonara")
