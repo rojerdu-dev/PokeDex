@@ -23,27 +23,42 @@ func startRepl() {
 		if len(cleaned) == 0 {
 			continue
 		}
-		command := cleaned[0]
+		commandName := cleaned[0]
 
-		switch command {
-		case "help":
-			fmt.Println("Welcome to PokeDex Help Menu!")
-			fmt.Println("Available commands:")
-			fmt.Println("- help")
-			fmt.Println("- exit")
-			fmt.Println("")
-		case "exit":
-			os.Exit(0)
-		default:
+		availableCommands := getCommands()
+
+		command, ok := availableCommands[commandName]
+		if !ok {
 			fmt.Println("invalid command")
+			continue
 		}
-
-		//fmt.Println("right back at you:", cleaned)
+		command.callback()
 
 		if inputText == "exit" {
 			fmt.Println("sayonara")
 			break
 		}
+	}
+}
+
+type cliCommand struct {
+	name        string
+	description string
+	callback    func()
+}
+
+func getCommands() map[string]cliCommand {
+	return map[string]cliCommand{
+		"help": {
+			name:        "help",
+			description: "Prints this help menu",
+			callback:    CallbackHelp,
+		},
+		"exit": {
+			name:        "exit",
+			description: "Exit PokeDex",
+			callback:    CallbackExit,
+		},
 	}
 }
 
