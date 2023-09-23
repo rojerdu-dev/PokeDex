@@ -3,12 +3,21 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/rojerdu-dev/PokeDex/internal/pokeapi"
+	"log"
 	"os"
 	"strings"
 )
 
 func main() {
-	startRepl()
+	pokeapiClient := pokeapi.NewClient()
+
+	resp, err := pokeapiClient.GetLocationAreas()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(resp)
+	//startRepl()
 }
 
 func startRepl() {
@@ -44,7 +53,7 @@ func startRepl() {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func()
+	callback    func() error
 }
 
 func getCommands() map[string]cliCommand {

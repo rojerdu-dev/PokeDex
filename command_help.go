@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func CallbackHelp() {
+func CallbackHelp() error {
 	fmt.Println("Welcome to PokeDex Help Menu!")
 	fmt.Println("Available commands:")
 
@@ -14,4 +14,5 @@ func CallbackHelp() {
 	}
 
 	fmt.Println("")
+	return nil
 }
