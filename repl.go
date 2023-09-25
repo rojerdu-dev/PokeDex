@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func StartRepl() {
+func StartRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -28,7 +28,7 @@ func StartRepl() {
 			fmt.Println("invalid command")
 			continue
 		}
-		command.callback()
+		command.callback(cfg)
 
 		if inputText == "exit" {
 			fmt.Println("sayonara")
@@ -46,7 +46,7 @@ func cleanInput(str string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
