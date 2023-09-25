@@ -28,7 +28,10 @@ func StartRepl(cfg *config) {
 			fmt.Println("invalid command")
 			continue
 		}
-		command.callback(cfg)
+		err := command.callback(cfg)
+		if err != nil {
+			fmt.Println(err)
+		}
 
 		if inputText == "exit" {
 			fmt.Println("sayonara")
@@ -58,8 +61,13 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			name:        "map",
-			description: "List some location areas",
+			description: "List next page of location areas",
 			callback:    CallbackMap,
+		},
+		"mapb": {
+			name:        "map",
+			description: "List previous page of location areas",
+			callback:    CallbackMapb,
 		},
 		"exit": {
 			name:        "exit",
